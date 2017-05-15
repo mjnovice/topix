@@ -2,6 +2,7 @@ package topicstore
 
 import (
 	"errors"
+	"sort"
 )
 
 type TopicStoreElement struct {
