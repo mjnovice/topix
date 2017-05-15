@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mjnovice/topix/topicstore"
 	"log"
@@ -45,7 +44,6 @@ func submitHandler(c *gin.Context) {
 func voteHandler(c *gin.Context) {
 	topicIdStr := c.Param("id")
 	action := c.Param("action")
-	fmt.Println(action)
 	//check for type of topicId
 	topicId, err := strconv.Atoi(topicIdStr)
 	if err != nil {
@@ -75,7 +73,6 @@ func voteHandler(c *gin.Context) {
 func main() {
 	port := os.Getenv("PORT")
 
-	port = "5000"
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
