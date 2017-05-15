@@ -53,7 +53,7 @@ func (t *TopicStore) Insert(topicText string) {
 	t.access <- true
 }
 
-func (t *TopicStore) GetTopics() []TopicStoreElement {
+func (t *TopicStore) GetAllTopics() []TopicStoreElement {
 	return t.topics
 }
 
@@ -94,5 +94,5 @@ func (t *TopicStore) GetHotTopics() []TopicStoreElement {
 	}
 	//Exiting critical section
 	t.access <- true
-	return result
+	return sort.Slice(result, func(a, b TopicStoreElement) bool { return a.UpVotes > b.UpVotes })
 }

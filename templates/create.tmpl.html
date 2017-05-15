@@ -1,0 +1,10 @@
+<html>
+    {{ template "header.tmpl.html"  }}    
+    <body>
+        <h1>Create a new topic</h1>
+        <form action="/submit" method="post">
+            Topic: <input type="text" name="topic">
+            <input type="submit" value="Create Topic">
+        </form>
+    </body>
+</html>

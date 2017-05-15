@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type TopicList struct {
@@ -31,26 +32,43 @@ func createHandler(c *gin.Context) {
 	c.HTML(http.StatusOK, "create.tmpl.html", nil)
 }
 
+func submitHandler(c *gin.Context) {
+	topicText := c.PostForm("topic")
+	if len(topicText) > 255 || len(topicText) == 0 {
+		c.String(http.StatusBadRequest, "Size of topic text exceeds 255 or is blank")
+		return
+	}
+	allTopicStore.Insert(topicText)
+	c.Redirect(http.StatusFound, "/")
+}
+
 func voteHandler(c *gin.Context) {
-	topicId := c.Param("id")
+	topicIdStr := c.Param("id")
 	action := c.Param("action")
-	var err error
+	fmt.Println(action)
+	//check for type of topicId
+	topicId, err := strconv.Atoi(topicIdStr)
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+		return
+
+	}
 
 	//check for validity of action
 	if action == "up" {
-		err := allTopicStore.UpVote(topicId)
+		err = allTopicStore.UpVote(topicId)
 	} else if action == "down" {
-		err := allTopicStore.DownVote(topicId)
+		err = allTopicStore.DownVote(topicId)
 	} else {
-		c.HTML(http.StatusBadRequest, "Invalid action", nil)
+		c.String(http.StatusBadRequest, "Invalid action")
 		return
 	}
 
 	//check for correctness of id
 	if err != nil {
-		c.HTML(http.StatusBadRequest, err, nil)
+		c.String(http.StatusBadRequest, err.Error())
 	} else {
-		c.HTML(http.StatusOK, "all.tmpl.html", nil)
+		c.Redirect(http.StatusFound, "/all")
 	}
 }
 
@@ -69,8 +87,8 @@ func main() {
 	router.GET("/", rootHandler)
 	router.GET("/all", allTopicsHandler)
 	router.GET("/create", createHandler)
-	router.GET("/vote/:id/*action", voteHandler)
-	router.POST("/submit", voteHandler)
+	router.GET("/vote/:id/:action", voteHandler)
+	router.POST("/submit", submitHandler)
 
 	router.Run(":" + port)
 }
