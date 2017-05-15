@@ -95,5 +95,5 @@ func (t *TopicStore) GetHotTopics() []TopicStoreElement {
 	}
 	//Exiting critical section
 	t.access <- true
-	return sort.Slice(result, func(a, b TopicStoreElement) bool { return a.UpVotes > b.UpVotes })
+	return sort.Slice(result, func(a, b int) bool { return result[a].UpVotes > result[b].UpVotes })
 }
