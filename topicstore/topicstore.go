@@ -1,4 +1,4 @@
-package topic_store
+package topicstore
 
 import (
 	"errors"
