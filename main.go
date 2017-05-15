@@ -15,7 +15,7 @@ type TopicList struct {
 }
 
 //The global in memory object which stores all the topics.
-var allTopicStore = topicstore.NewTopicStore(20)
+var allTopicStore = topicstore.NewTopicStore(5)
 
 func rootHandler(c *gin.Context) {
 	hotTopics := allTopicStore.GetHotTopics()

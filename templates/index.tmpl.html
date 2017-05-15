@@ -2,13 +2,15 @@
     {{ template "header.tmpl.html"  }}    
 <body>
   <h1>Top 20 UpVoted topics.</h1>
+<table border=1>
   {{range $id,$topic := .}} 
-      <p>
-          <td>{{ $topic.Text }}</td>|
-          <td>UpVotes: {{ $topic.UpVotes }}</td>|
+      <tr>
+          <td>{{ $topic.Text }}</td>
+          <td>UpVotes: {{ $topic.UpVotes }}</td>
           <td>DownVotes: {{ $topic.DownVotes }}</td>
-      </p>
-  {{end}}
+      </tr>
+      {{end}}
+  </table>
 
 </body>
 </html>

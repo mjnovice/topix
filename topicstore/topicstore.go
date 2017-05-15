@@ -65,12 +65,23 @@ func (t *TopicStore) UpVote(currentTopicId int) error {
 	t.topics[currentTopicId].UpVotes += 1
 	<-t.access
 	//Entering critical section
-	//updating hot topics
-	for topicId, numUpVotes := range t.hotTopics {
-		if numUpVotes < t.topics[topicId].UpVotes {
-			delete(t.hotTopics, topicId)
+	_, found := t.hotTopics[currentTopicId]
+	if !found {
+		//finding minimum upvoted hot topic
+		id := currentTopicId
+		upvote := t.topics[currentTopicId].UpVotes
+
+		for topicId, numUpVotes := range t.hotTopics {
+			if numUpVotes < upvote {
+				upvote = numUpVotes
+				id = topicId
+			}
+		}
+
+		//deleting minimum upvoted hot topic if current is not the minimum
+		if id != currentTopicId {
+			delete(t.hotTopics, id)
 			t.hotTopics[currentTopicId] = t.topics[currentTopicId].UpVotes
-			break
 		}
 	}
 	//Exiting critical section
