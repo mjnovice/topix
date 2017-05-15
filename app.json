@@ -1,0 +1,13 @@
+{
+  "name": "Topix: A forum for discussing topics, and voting on them.",
+  "description": "Users can add topics and vote on them.",
+  "keywords": [
+    "topics",
+    "go",
+    "votes"
+  ],
+  "image": "heroku/go:1.6",
+  "mount_dir": "src/github.com/mjnovice/topix",
+  "website": "http://github.com/mjnovice/topix",
+  "repository": "http://github.com/mjnovice/topix"
+}
