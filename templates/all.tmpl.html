@@ -4,10 +4,10 @@
   <h1>All Topics.</h1>
   {{range $id,$topic := .}} 
       <p>
-          <td>{{ $topic.Text }}</td>
-          <td>UpVotes: {{ $topic.UpVotes }}</td>
-          <td>DownVotes: {{ $topic.DownVotes }}</td>
-          <td><button><a href="/vote/{{ $id }}/up">UpVote</a></button></td>
+          <td>{{ $topic.Text }}</td>|
+          <td>UpVotes: {{ $topic.UpVotes }}</td>|
+          <td>DownVotes: {{ $topic.DownVotes }}</td>|
+          <td><button><a href="/vote/{{ $id }}/up">UpVote</a></button></td>|
           <td><button><a href="/vote/{{ $id }}/down">DownVote</a></button></td>
       </p>
   {{end}}
